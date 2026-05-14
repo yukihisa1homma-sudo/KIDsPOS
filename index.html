@@ -1,103 +1,155 @@
-
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAPPY MART POS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-.app{font-family:var(--font-sans);display:grid;grid-template-columns:1fr 340px;gap:0;min-height:680px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
-.left-panel{padding:14px;border-right:0.5px solid var(--color-border-tertiary);overflow-y:auto;max-height:680px}
-.right-panel{display:flex;flex-direction:column;max-height:680px}
-.section-label{font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.06em;margin-bottom:8px}
-.cat-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
-.cat-tab{padding:4px 10px;border-radius:20px;border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);font-size:12px;cursor:pointer;color:var(--color-text-secondary);transition:all .1s}
-.cat-tab.on{background:#1a1a2e;color:#fff;border-color:#1a1a2e}
-.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
-.pbtn{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 6px;cursor:pointer;text-align:center;transition:all .1s;user-select:none}
-.pbtn:hover{background:var(--color-background-secondary)}
-.pbtn:active{transform:scale(.95)}
-.pemoji{font-size:26px;display:block;margin-bottom:4px}
-.pname{font-size:12px;font-weight:500;color:var(--color-text-primary);display:block;margin-bottom:2px}
-.pprice{font-size:11px;color:var(--color-text-secondary)}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f5f5f0;
+    --surface: #ffffff;
+    --surface2: #f0efe9;
+    --border: rgba(0,0,0,0.12);
+    --border2: rgba(0,0,0,0.22);
+    --text: #1a1a1a;
+    --text2: #666660;
+    --text3: #999993;
+    --green: #639922;
+    --green-bg: #EAF3DE;
+    --green-text: #27500A;
+    --amber-bg: #FAEEDA;
+    --amber-text: #633806;
+    --red-bg: #FCEBEB;
+    --red-text: #791F1F;
+    --info: #185FA5;
+    --danger: #e24b4a;
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1a;
+      --surface: #262622;
+      --surface2: #2e2e2a;
+      --border: rgba(255,255,255,0.12);
+      --border2: rgba(255,255,255,0.22);
+      --text: #f0efe9;
+      --text2: #a0a09a;
+      --text3: #666660;
+    }
+  }
+  body { background: var(--bg); font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif; color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+  header { background: #1a1a2e; color: #fff; padding: 10px 20px; display: flex; align-items: center; gap: 12px; }
+  header h1 { font-size: 16px; font-weight: 500; letter-spacing: .06em; flex: 1; }
+  .app { display: grid; grid-template-columns: 1fr 360px; flex: 1; gap: 0; max-width: 1100px; width: 100%; margin: 0 auto; padding: 16px; gap: 16px; }
+  @media (max-width: 760px) { .app { grid-template-columns: 1fr; } }
 
-.rhead{background:#1a1a2e;color:#fff;padding:12px 14px}
-.rhead-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.store-nm{font-size:14px;font-weight:500;letter-spacing:.05em}
-.member-area{display:flex;align-items:center;gap:6px}
-.member-badge{font-size:11px;background:rgba(255,255,255,.15);padding:3px 8px;border-radius:12px;cursor:pointer}
-.member-badge.has-member{background:#EAF3DE;color:#27500A}
-.tax-toggle{display:flex;gap:0;border:0.5px solid rgba(255,255,255,.3);border-radius:6px;overflow:hidden}
-.ttbtn{padding:4px 10px;font-size:11px;cursor:pointer;background:transparent;color:rgba(255,255,255,.6);border:none;transition:all .1s}
-.ttbtn.on{background:rgba(255,255,255,.2);color:#fff;font-weight:500}
+  /* Left panel */
+  .left-panel { display: flex; flex-direction: column; gap: 12px; }
+  .section-label { font-size: 11px; font-weight: 500; color: var(--text2); letter-spacing: .06em; }
+  .cat-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+  .cat-tab { padding: 5px 12px; border-radius: 20px; border: 0.5px solid var(--border); background: var(--surface); font-size: 12px; cursor: pointer; color: var(--text2); transition: all .1s; }
+  .cat-tab.on { background: #1a1a2e; color: #fff; border-color: #1a1a2e; }
+  .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+  .pbtn { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 12px 8px; cursor: pointer; text-align: center; transition: all .12s; user-select: none; }
+  .pbtn:hover { background: var(--surface2); border-color: var(--border2); }
+  .pbtn:active { transform: scale(.95); }
+  .pemoji { font-size: 30px; display: block; margin-bottom: 6px; }
+  .pname { font-size: 13px; font-weight: 500; color: var(--text); display: block; margin-bottom: 3px; }
+  .pprice { font-size: 12px; color: var(--text2); }
 
-.items-area{flex:1;overflow-y:auto;padding:10px 14px;min-height:180px}
-.empty-state{text-align:center;padding:32px 0;color:var(--color-text-secondary);font-size:13px}
-.ritem{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
-.ritem:last-child{border-bottom:none}
-.ri-emoji{font-size:16px;flex-shrink:0}
-.ri-info{flex:1;min-width:0}
-.ri-name{font-size:12px;font-weight:500;color:var(--color-text-primary)}
-.ri-detail{font-size:11px;color:var(--color-text-secondary)}
-.ri-sub{font-size:12px;font-weight:500;color:var(--color-text-primary);flex-shrink:0}
-.rm-btn{background:none;border:none;cursor:pointer;color:var(--color-text-secondary);font-size:15px;padding:1px 3px;border-radius:3px;line-height:1}
-.rm-btn:hover{color:#e24b4a}
+  /* Right panel - receipt */
+  .right-panel { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); display: flex; flex-direction: column; overflow: hidden; }
+  .rhead { background: #1a1a2e; padding: 14px 16px; }
+  .rhead-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .store-nm { font-size: 15px; font-weight: 500; letter-spacing: .05em; color: #fff; }
+  .member-badge { font-size: 12px; background: rgba(255,255,255,.18); color: #fff; padding: 5px 12px; border-radius: 14px; cursor: pointer; border: 0.5px solid rgba(255,255,255,.35); transition: background .1s; white-space: nowrap; }
+  .member-badge:hover { background: rgba(255,255,255,.28); }
+  .member-badge.has-member { background: #EAF3DE; color: #27500A; border-color: #97C459; }
+  .tax-toggle { display: flex; border: 0.5px solid rgba(255,255,255,.4); border-radius: 7px; overflow: hidden; }
+  .ttbtn { flex: 1; padding: 6px 10px; font-size: 12px; cursor: pointer; background: transparent; color: rgba(255,255,255,.6); border: none; transition: all .1s; font-weight: 400; }
+  .ttbtn.on { background: rgba(255,255,255,.22); color: #fff; font-weight: 500; }
+  .member-bar { display: flex; align-items: center; gap: 10px; padding: 8px 16px; border-bottom: 0.5px solid var(--border); background: var(--surface2); }
+  .member-avatar { width: 34px; height: 34px; border-radius: 50%; background: #B5D4F4; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; color: #0C447C; flex-shrink: 0; }
+  .member-bar-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .member-bar-pts { font-size: 11px; color: var(--text2); }
+  .member-logout { margin-left: auto; background: none; border: none; cursor: pointer; color: var(--text3); padding: 3px 5px; border-radius: 4px; font-size: 14px; }
+  .member-logout:hover { color: var(--danger); }
+  .items-area { flex: 1; overflow-y: auto; padding: 10px 16px; min-height: 200px; max-height: 300px; }
+  .empty-state { text-align: center; padding: 40px 0; color: var(--text2); font-size: 13px; }
+  .ritem { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 0.5px solid var(--border); }
+  .ritem:last-child { border-bottom: none; }
+  .ri-emoji { font-size: 18px; flex-shrink: 0; }
+  .ri-info { flex: 1; min-width: 0; }
+  .ri-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .ri-detail { font-size: 11px; color: var(--text2); }
+  .ri-sub { font-size: 13px; font-weight: 500; color: var(--text); flex-shrink: 0; }
+  .rm-btn { background: none; border: none; cursor: pointer; color: var(--text3); font-size: 18px; padding: 0 4px; line-height: 1; transition: color .1s; }
+  .rm-btn:hover { color: var(--danger); }
+  .rfooter { padding: 12px 16px; border-top: 0.5px solid var(--border); }
+  .discount-row { display: flex; gap: 8px; margin-bottom: 8px; }
+  .coupon-input { flex: 1; font-size: 13px; padding: 7px 10px; border: 0.5px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--text); outline: none; }
+  .coupon-input:focus { border-color: var(--border2); }
+  .apply-btn { padding: 7px 14px; font-size: 13px; background: var(--surface2); border: 0.5px solid var(--border); border-radius: var(--radius); cursor: pointer; color: var(--text); white-space: nowrap; transition: background .1s; }
+  .apply-btn:hover { background: var(--bg); }
+  .summary-table { width: 100%; font-size: 13px; margin-bottom: 10px; border-collapse: collapse; }
+  .summary-table td { padding: 3px 0; }
+  .summary-table td:last-child { text-align: right; }
+  .st-muted { color: var(--text2); }
+  .st-green { color: var(--green); }
+  .st-total { font-size: 18px; font-weight: 500; color: var(--text); border-top: 0.5px solid var(--border); }
+  .st-total td { padding-top: 8px; }
+  .pts-earn { font-size: 11px; color: var(--green); text-align: right; margin-bottom: 10px; }
+  .pay-btn { width: 100%; padding: 12px; background: #1a1a2e; color: #fff; border: none; border-radius: var(--radius); font-size: 15px; font-weight: 500; cursor: pointer; transition: opacity .15s; }
+  .pay-btn:hover:not(:disabled) { opacity: .85; }
+  .pay-btn:disabled { opacity: .3; cursor: not-allowed; }
+  .sub-btns { display: flex; gap: 8px; margin-top: 8px; }
+  .sub-btn { flex: 1; padding: 7px; font-size: 12px; background: none; border: 0.5px solid var(--border); border-radius: var(--radius); cursor: pointer; color: var(--text2); transition: background .1s; }
+  .sub-btn:hover { background: var(--surface2); }
+  .coupon-ok { font-size: 11px; color: var(--green); margin-top: 4px; }
+  .coupon-err { font-size: 11px; color: var(--danger); margin-top: 4px; }
 
-.rfooter{padding:10px 14px;border-top:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
-.discount-row{display:flex;gap:6px;margin-bottom:8px}
-.coupon-input{flex:1;font-size:12px;padding:5px 8px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary)}
-.apply-btn{padding:5px 10px;font-size:12px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);cursor:pointer;color:var(--color-text-primary);white-space:nowrap}
-.apply-btn:hover{background:var(--color-background-tertiary)}
-.summary-table{width:100%;font-size:12px;margin-bottom:8px;border-collapse:collapse}
-.summary-table td{padding:2px 0}
-.summary-table td:last-child{text-align:right}
-.st-muted{color:var(--color-text-secondary)}
-.st-discount{color:#639922}
-.st-total{font-size:16px;font-weight:500;color:var(--color-text-primary);border-top:0.5px solid var(--color-border-tertiary)}
-.st-total td{padding-top:6px}
-.pts-row{font-size:11px;color:#639922;margin-bottom:8px;text-align:right}
-.pay-btn{width:100%;padding:10px;background:#1a1a2e;color:#fff;border:none;border-radius:var(--border-radius-md);font-size:14px;font-weight:500;cursor:pointer;transition:opacity .15s}
-.pay-btn:hover:not(:disabled){opacity:.85}
-.pay-btn:disabled{opacity:.3;cursor:not-allowed}
-.sub-btns{display:flex;gap:6px;margin-top:6px}
-.sub-btn{flex:1;padding:6px;font-size:11px;background:none;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);cursor:pointer;color:var(--color-text-secondary);transition:background .1s}
-.sub-btn:hover{background:var(--color-background-secondary)}
-
-.overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:50}
-.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);padding:22px 20px;width:260px;border:0.5px solid var(--color-border-tertiary)}
-.modal-title{font-size:15px;font-weight:500;margin-bottom:14px;color:var(--color-text-primary)}
-.modal input{width:100%;font-size:13px;padding:7px 10px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);margin-bottom:8px}
-.modal-btns{display:flex;gap:8px;margin-top:4px}
-.mbtn-primary{flex:1;padding:8px;background:#1a1a2e;color:#fff;border:none;border-radius:var(--border-radius-md);font-size:13px;cursor:pointer}
-.mbtn-cancel{flex:1;padding:8px;background:none;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);font-size:13px;cursor:pointer;color:var(--color-text-secondary)}
-.member-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;margin-bottom:12px;display:flex;align-items:center;gap:10px;border:0.5px solid var(--color-border-tertiary)}
-.member-avatar{width:36px;height:36px;border-radius:50%;background:#B5D4F4;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#0C447C;flex-shrink:0}
-.member-name{font-size:13px;font-weight:500;color:var(--color-text-primary)}
-.member-pts{font-size:11px;color:var(--color-text-secondary)}
-.member-logout{margin-left:auto;font-size:11px;color:var(--color-text-secondary);cursor:pointer;background:none;border:none;padding:2px 4px}
-.member-logout:hover{color:#e24b4a}
-.tag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:500}
-.tag-green{background:#EAF3DE;color:#27500A}
-.tag-amber{background:#FAEEDA;color:#633806}
-.tag-red{background:#FCEBEB;color:#791F1F}
-.coupon-applied{font-size:11px;color:#639922;margin-top:4px}
-.err-msg{font-size:11px;color:#e24b4a;margin-top:4px}
-.complete-modal{text-align:center}
-.complete-emoji{font-size:44px;display:block;margin-bottom:10px}
-.complete-ttl{font-size:16px;font-weight:500;margin-bottom:4px;color:var(--color-text-primary)}
-.complete-sub{font-size:12px;color:var(--color-text-secondary);margin-bottom:14px;line-height:1.6}
-.complete-total{font-size:24px;font-weight:500;color:var(--color-text-primary);margin-bottom:14px}
-.pt-earned{display:inline-block;font-size:12px;background:#EAF3DE;color:#27500A;padding:4px 12px;border-radius:10px;margin-bottom:14px}
-.members-list{max-height:200px;overflow-y:auto}
-.mlist-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary);cursor:pointer}
-.mlist-item:last-child{border-bottom:none}
-.mlist-item:hover .mlist-name{color:#185FA5}
-.mlist-name{font-size:13px;font-weight:500;color:var(--color-text-primary)}
-.mlist-pts{font-size:11px;color:var(--color-text-secondary)}
-.new-member-link{font-size:12px;color:#185FA5;cursor:pointer;margin-top:10px;display:block;text-align:center}
+  /* Modal */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: flex; align-items: center; justify-content: center; z-index: 100; }
+  .modal { background: var(--surface); border-radius: var(--radius-lg); padding: 24px 22px; width: 290px; border: 0.5px solid var(--border); }
+  .modal-title { font-size: 15px; font-weight: 500; margin-bottom: 16px; color: var(--text); }
+  .modal input { width: 100%; font-size: 13px; padding: 8px 10px; border: 0.5px solid var(--border); border-radius: var(--radius); background: var(--surface); color: var(--text); margin-bottom: 8px; outline: none; }
+  .modal input:focus { border-color: var(--border2); }
+  .modal-btns { display: flex; gap: 8px; margin-top: 8px; }
+  .mbtn-ok { flex: 1; padding: 9px; background: #1a1a2e; color: #fff; border: none; border-radius: var(--radius); font-size: 13px; cursor: pointer; }
+  .mbtn-cancel { flex: 1; padding: 9px; background: none; border: 0.5px solid var(--border); border-radius: var(--radius); font-size: 13px; cursor: pointer; color: var(--text2); }
+  .members-list { max-height: 220px; overflow-y: auto; }
+  .mlist-item { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 0.5px solid var(--border); cursor: pointer; }
+  .mlist-item:last-child { border-bottom: none; }
+  .mlist-item:hover .mlist-name { color: var(--info); }
+  .mlist-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .mlist-pts { font-size: 11px; color: var(--text2); }
+  .new-member-link { font-size: 12px; color: var(--info); cursor: pointer; margin-top: 12px; display: block; text-align: center; }
+  .tag { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 500; }
+  .tag-green { background: var(--green-bg); color: var(--green-text); }
+  .tag-amber { background: var(--amber-bg); color: var(--amber-text); }
+  .tag-red { background: var(--red-bg); color: var(--red-text); }
+  .complete-modal { text-align: center; }
+  .complete-emoji { font-size: 52px; display: block; margin-bottom: 12px; }
+  .complete-ttl { font-size: 18px; font-weight: 500; margin-bottom: 4px; color: var(--text); }
+  .complete-sub { font-size: 13px; color: var(--text2); margin-bottom: 16px; }
+  .complete-total { font-size: 28px; font-weight: 500; color: var(--text); margin-bottom: 16px; }
+  .pt-earned { display: inline-block; font-size: 13px; background: var(--green-bg); color: var(--green-text); padding: 5px 14px; border-radius: 12px; margin-bottom: 16px; }
+  .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #1a1a2e; color: #fff; font-size: 13px; padding: 8px 18px; border-radius: 20px; z-index: 200; pointer-events: none; transition: opacity .3s; white-space: nowrap; }
 </style>
+</head>
+<body>
 
-<h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">子ども向けPOSシステム v2 — 会員・割引・ポイント対応レジ</h2>
+<header>
+  <h1>🏪 HAPPY MART POS</h1>
+  <span id="header-member" style="font-size:12px;color:rgba(255,255,255,.6)"></span>
+</header>
 
-<div style="position:relative">
-<div class="app" id="app">
+<div class="app">
   <div class="left-panel">
-    <div class="section-label"><i class="ti ti-shopping-bag" aria-hidden="true" style="font-size:13px;vertical-align:-1px;margin-right:4px"></i>商品</div>
+    <div class="section-label"><i class="ti ti-shopping-bag" style="font-size:13px;vertical-align:-1px;margin-right:4px"></i>商品</div>
     <div class="cat-tabs" id="cats"></div>
     <div class="pgrid" id="pgrid"></div>
   </div>
@@ -105,57 +157,53 @@
   <div class="right-panel">
     <div class="rhead">
       <div class="rhead-top">
-        <span class="store-nm">🏪 HAPPY MART</span>
-        <div class="member-area">
-          <span class="member-badge" id="member-badge" onclick="openMemberModal()">
-            <i class="ti ti-user" aria-hidden="true" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>会員
-          </span>
-        </div>
+        <span class="store-nm">レジ</span>
+        <button class="member-badge" id="member-badge" onclick="openMemberModal()">
+          <i class="ti ti-user" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>会員
+        </button>
       </div>
       <div class="tax-toggle">
-        <button class="ttbtn on" id="tt10" onclick="setTax(10)">イートイン 10%</button>
-        <button class="ttbtn" id="tt8" onclick="setTax(8)">お持ち帰り 8%</button>
+        <button class="ttbtn on" id="tt10" onclick="setTax(10)">🪑 イートイン 10%</button>
+        <button class="ttbtn" id="tt8" onclick="setTax(8)">🛍 お持ち帰り 8%</button>
       </div>
     </div>
 
-    <div id="member-display"></div>
+    <div id="member-bar"></div>
 
     <div class="items-area" id="items-area">
-      <div class="empty-state"><span style="font-size:24px;display:block;margin-bottom:6px">🛒</span>商品を選んでください</div>
+      <div class="empty-state"><span style="font-size:32px;display:block;margin-bottom:8px">🛒</span>商品を選んでください</div>
     </div>
 
     <div class="rfooter">
       <div class="discount-row">
-        <input class="coupon-input" id="coupon-input" placeholder="割引コード（例: HAPPY10）" />
+        <input class="coupon-input" id="coupon-input" placeholder="割引コード (例: HAPPY10)" />
         <button class="apply-btn" onclick="applyCoupon()">適用</button>
       </div>
       <div id="coupon-msg"></div>
 
-      <table class="summary-table" id="summary-table">
-        <tr><td class="st-muted">小計</td><td id="s-subtotal">¥0</td></tr>
-        <tr><td class="st-muted" id="s-tax-label">消費税（10%）</td><td id="s-tax">¥0</td></tr>
-        <tr id="s-disc-row" style="display:none"><td class="st-discount"><i class="ti ti-tag" aria-hidden="true" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>割引</td><td class="st-discount" id="s-disc">-¥0</td></tr>
-        <tr id="s-pts-row" style="display:none"><td class="st-discount"><i class="ti ti-star" aria-hidden="true" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>ポイント利用</td><td class="st-discount" id="s-pts-use">-¥0</td></tr>
+      <table class="summary-table" style="margin-top:10px">
+        <tr><td class="st-muted">小計</td><td id="s-sub">¥0</td></tr>
+        <tr><td class="st-muted" id="s-tax-lbl">消費税（10%）</td><td id="s-tax">¥0</td></tr>
+        <tr id="s-disc-row" style="display:none"><td class="st-green"><i class="ti ti-tag" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>割引</td><td class="st-green" id="s-disc">-¥0</td></tr>
+        <tr id="s-pts-row" style="display:none"><td class="st-green"><i class="ti ti-star" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>ポイント利用</td><td class="st-green" id="s-pts-use">-¥0</td></tr>
         <tr class="st-total"><td>合計</td><td id="s-total">¥0</td></tr>
       </table>
 
-      <div id="pts-earn-row" style="display:none" class="pts-row"></div>
+      <div id="pts-earn" class="pts-earn" style="display:none"></div>
+
       <button class="pay-btn" id="pay-btn" disabled onclick="openPayModal()">
-        <i class="ti ti-credit-card" aria-hidden="true" style="font-size:15px;vertical-align:-2px;margin-right:5px"></i>お会計する
+        <i class="ti ti-credit-card" style="font-size:16px;vertical-align:-2px;margin-right:6px"></i>お会計する
       </button>
       <div class="sub-btns">
-        <button class="sub-btn" onclick="usePts()"><i class="ti ti-star" aria-hidden="true" style="font-size:13px;vertical-align:-1px;margin-right:3px"></i>ポイント使う</button>
-        <button class="sub-btn" onclick="clearAll()"><i class="ti ti-trash" aria-hidden="true" style="font-size:13px;vertical-align:-1px;margin-right:3px"></i>クリア</button>
+        <button class="sub-btn" onclick="usePts()"><i class="ti ti-star" style="font-size:13px;vertical-align:-1px;margin-right:3px"></i>ポイント使う</button>
+        <button class="sub-btn" onclick="clearAll()"><i class="ti ti-trash" style="font-size:13px;vertical-align:-1px;margin-right:3px"></i>クリア</button>
       </div>
     </div>
   </div>
 </div>
 
-<div id="overlay-area"></div>
-</div>
-
 <script>
-const PRODUCTS=[
+const PRODUCTS = [
   {id:1,name:"おにぎり",emoji:"🍙",price:120,cat:"食べ物"},
   {id:2,name:"サンドイッチ",emoji:"🥪",price:280,cat:"食べ物"},
   {id:3,name:"から揚げ",emoji:"🍗",price:200,cat:"食べ物"},
@@ -173,38 +221,29 @@ const PRODUCTS=[
   {id:15,name:"消しゴム",emoji:"🧽",price:100,cat:"文具"},
   {id:16,name:"おもちゃ",emoji:"🧸",price:680,cat:"おもちゃ"},
 ];
-
-const COUPONS={
+const COUPONS = {
   "HAPPY10":{type:"pct",val:10,label:"10%オフ"},
   "HAPPY50":{type:"fixed",val:50,label:"50円引き"},
   "MEMBER20":{type:"pct",val:20,label:"会員20%オフ"},
   "SALE100":{type:"fixed",val:100,label:"100円引き"},
 };
-
-let MEMBERS=[
+let MEMBERS = [
   {id:1,name:"田中 さくら",pts:320,initials:"田"},
   {id:2,name:"山田 たろう",pts:80,initials:"山"},
   {id:3,name:"鈴木 はな",pts:550,initials:"鈴"},
 ];
+let cart=[], taxRate=10, currentCat="すべて", coupon=null, currentMember=null, usingPts=0;
+const CATS = ["すべて", ...new Set(PRODUCTS.map(p=>p.cat))];
 
-let cart=[];
-let taxRate=10;
-let currentCat="すべて";
-let coupon=null;
-let currentMember=null;
-let usingPts=0;
-
-const CATS=["すべて",...new Set(PRODUCTS.map(p=>p.cat))];
-
-function renderCats(){
-  document.getElementById("cats").innerHTML=CATS.map(c=>
+function renderCats() {
+  document.getElementById("cats").innerHTML = CATS.map(c =>
     `<button class="cat-tab${c===currentCat?" on":""}" onclick="selectCat('${c}')">${c}</button>`
   ).join("");
 }
-function selectCat(c){currentCat=c;renderCats();renderProducts();}
-function renderProducts(){
-  const list=currentCat==="すべて"?PRODUCTS:PRODUCTS.filter(p=>p.cat===currentCat);
-  document.getElementById("pgrid").innerHTML=list.map(p=>
+function selectCat(c) { currentCat=c; renderCats(); renderProducts(); }
+function renderProducts() {
+  const list = currentCat==="すべて" ? PRODUCTS : PRODUCTS.filter(p=>p.cat===currentCat);
+  document.getElementById("pgrid").innerHTML = list.map(p =>
     `<button class="pbtn" onclick="addItem(${p.id})">
       <span class="pemoji">${p.emoji}</span>
       <span class="pname">${p.name}</span>
@@ -212,47 +251,44 @@ function renderProducts(){
     </button>`
   ).join("");
 }
-function addItem(id){
-  const p=PRODUCTS.find(x=>x.id===id);
-  const ex=cart.find(x=>x.id===id);
-  if(ex)ex.qty++;
-  else cart.push({...p,qty:1});
-  usingPts=0;
-  renderReceipt();
+function addItem(id) {
+  const p = PRODUCTS.find(x=>x.id===id);
+  const ex = cart.find(x=>x.id===id);
+  if(ex) ex.qty++; else cart.push({...p, qty:1});
+  usingPts=0; renderReceipt();
 }
-function removeItem(id){
-  const i=cart.findIndex(x=>x.id===id);
-  if(i<0)return;
+function removeItem(id) {
+  const i = cart.findIndex(x=>x.id===id);
+  if(i<0) return;
   cart[i].qty--;
-  if(cart[i].qty<=0)cart.splice(i,1);
-  usingPts=0;
+  if(cart[i].qty<=0) cart.splice(i,1);
+  usingPts=0; renderReceipt();
+}
+function clearAll() {
+  cart=[]; coupon=null; usingPts=0;
+  document.getElementById("coupon-input").value="";
+  document.getElementById("coupon-msg").innerHTML="";
   renderReceipt();
 }
-function clearAll(){cart=[];coupon=null;usingPts=0;document.getElementById("coupon-input").value="";document.getElementById("coupon-msg").innerHTML="";renderReceipt();}
+function calcSub() { return cart.reduce((s,x)=>s+x.price*x.qty, 0); }
+function calcTax(sub) { return Math.round(sub*taxRate/(100+taxRate)); }
+function calcDisc(sub) {
+  if(!coupon) return 0;
+  if(coupon.type==="pct") return Math.round(sub*coupon.val/100);
+  return Math.min(coupon.val, sub);
+}
+function calcTotal() {
+  const sub=calcSub(), disc=calcDisc(sub);
+  return Math.max(0, Math.max(0, sub-disc)-usingPts);
+}
+function calcEarn() { return Math.floor(calcTotal()/100); }
 
-function calcSubtotal(){return cart.reduce((s,x)=>s+x.price*x.qty,0);}
-function calcTax(sub){return Math.round(sub*taxRate/(100+taxRate));}
-function calcDiscount(sub){
-  if(!coupon)return 0;
-  if(coupon.type==="pct")return Math.round(sub*coupon.val/100);
-  return Math.min(coupon.val,sub);
-}
-function calcTotal(){
-  const sub=calcSubtotal();
-  const disc=calcDiscount(sub);
-  const afterDisc=Math.max(0,sub-disc);
-  return Math.max(0,afterDisc-usingPts);
-}
-function calcEarnPts(){
-  return Math.floor(calcTotal()/100);
-}
-
-function renderReceipt(){
-  const area=document.getElementById("items-area");
-  if(cart.length===0){
-    area.innerHTML=`<div class="empty-state"><span style="font-size:24px;display:block;margin-bottom:6px">🛒</span>商品を選んでください</div>`;
+function renderReceipt() {
+  const area = document.getElementById("items-area");
+  if(cart.length===0) {
+    area.innerHTML = `<div class="empty-state"><span style="font-size:32px;display:block;margin-bottom:8px">🛒</span>商品を選んでください</div>`;
   } else {
-    area.innerHTML=cart.map(it=>
+    area.innerHTML = cart.map(it =>
       `<div class="ritem">
         <span class="ri-emoji">${it.emoji}</span>
         <div class="ri-info">
@@ -264,188 +300,160 @@ function renderReceipt(){
       </div>`
     ).join("");
   }
-  const sub=calcSubtotal();
-  const tax=calcTax(sub);
-  const disc=calcDiscount(sub);
-  const total=calcTotal();
-  const earn=calcEarnPts();
-  document.getElementById("s-subtotal").textContent="¥"+sub.toLocaleString();
-  document.getElementById("s-tax-label").textContent=`消費税（${taxRate}%）`;
-  document.getElementById("s-tax").textContent="¥"+tax.toLocaleString();
-  const dr=document.getElementById("s-disc-row");
-  if(disc>0){dr.style.display="";document.getElementById("s-disc").textContent="-¥"+disc.toLocaleString();}
+  const sub=calcSub(), tax=calcTax(sub), disc=calcDisc(sub), total=calcTotal(), earn=calcEarn();
+  document.getElementById("s-sub").textContent = "¥"+sub.toLocaleString();
+  document.getElementById("s-tax-lbl").textContent = `消費税（${taxRate}%）`;
+  document.getElementById("s-tax").textContent = "¥"+tax.toLocaleString();
+  const dr = document.getElementById("s-disc-row");
+  if(disc>0){ dr.style.display=""; document.getElementById("s-disc").textContent="-¥"+disc.toLocaleString(); }
   else dr.style.display="none";
-  const pr=document.getElementById("s-pts-row");
-  if(usingPts>0){pr.style.display="";document.getElementById("s-pts-use").textContent="-¥"+usingPts.toLocaleString();}
+  const pr = document.getElementById("s-pts-row");
+  if(usingPts>0){ pr.style.display=""; document.getElementById("s-pts-use").textContent="-¥"+usingPts.toLocaleString(); }
   else pr.style.display="none";
-  document.getElementById("s-total").textContent="¥"+total.toLocaleString();
-  const pe=document.getElementById("pts-earn-row");
-  if(cart.length>0&&currentMember){pe.style.display="";pe.textContent=`+${earn}ポイント獲得予定`;}
+  document.getElementById("s-total").textContent = "¥"+total.toLocaleString();
+  const pe = document.getElementById("pts-earn");
+  if(cart.length>0 && currentMember){ pe.style.display=""; pe.textContent=`+${earn}ポイント獲得予定`; }
   else pe.style.display="none";
-  document.getElementById("pay-btn").disabled=cart.length===0;
+  document.getElementById("pay-btn").disabled = cart.length===0;
 }
 
-function setTax(r){
+function setTax(r) {
   taxRate=r;
-  document.getElementById("tt10").classList.toggle("on",r===10);
-  document.getElementById("tt8").classList.toggle("on",r===8);
+  document.getElementById("tt10").classList.toggle("on", r===10);
+  document.getElementById("tt8").classList.toggle("on", r===8);
   renderReceipt();
 }
 
-function applyCoupon(){
-  const code=document.getElementById("coupon-input").value.trim().toUpperCase();
-  const msg=document.getElementById("coupon-msg");
-  if(!code){msg.innerHTML=`<span class="err-msg">コードを入力してください</span>`;return;}
+function applyCoupon() {
+  const code = document.getElementById("coupon-input").value.trim().toUpperCase();
+  const msg = document.getElementById("coupon-msg");
+  if(!code){ msg.innerHTML=`<div class="coupon-err">コードを入力してください</div>`; return; }
   if(COUPONS[code]){
     coupon=COUPONS[code];
-    msg.innerHTML=`<span class="coupon-applied"><i class="ti ti-check" aria-hidden="true" style="font-size:12px;vertical-align:-1px;margin-right:2px"></i>${coupon.label}が適用されました</span>`;
-    usingPts=0;
-    renderReceipt();
+    msg.innerHTML=`<div class="coupon-ok"><i class="ti ti-check" style="font-size:12px;vertical-align:-1px;margin-right:2px"></i>${coupon.label}が適用されました</div>`;
+    usingPts=0; renderReceipt();
   } else {
-    msg.innerHTML=`<span class="err-msg">そのコードは使えません</span>`;
+    msg.innerHTML=`<div class="coupon-err">そのコードは使えません</div>`;
     coupon=null;
   }
 }
 
-function usePts(){
-  if(!currentMember){showToast("会員登録が必要です");return;}
-  if(currentMember.pts<=0){showToast("ポイントがありません");return;}
-  if(cart.length===0){showToast("商品を選んでください");return;}
-  const sub=calcSubtotal();
-  const disc=calcDiscount(sub);
-  const afterDisc=Math.max(0,sub-disc);
-  const maxUse=Math.min(currentMember.pts,afterDisc);
-  if(usingPts>0){usingPts=0;showToast("ポイント利用をキャンセルしました");}
-  else{usingPts=maxUse;showToast(`${maxUse}ポイント使います`);}
+function usePts() {
+  if(!currentMember){ showToast("会員登録が必要です"); return; }
+  if(currentMember.pts<=0){ showToast("ポイントがありません"); return; }
+  if(cart.length===0){ showToast("商品を選んでください"); return; }
+  const sub=calcSub(), disc=calcDisc(sub), afterDisc=Math.max(0,sub-disc);
+  const maxUse=Math.min(currentMember.pts, afterDisc);
+  if(usingPts>0){ usingPts=0; showToast("ポイント利用をキャンセルしました"); }
+  else { usingPts=maxUse; showToast(`${maxUse}ポイント使います`); }
   renderReceipt();
 }
 
-function showToast(msg){
-  const t=document.createElement("div");
-  t.textContent=msg;
-  Object.assign(t.style,{position:"absolute",bottom:"60px",left:"50%",transform:"translateX(-50%)",background:"#1a1a2e",color:"#fff",fontSize:"12px",padding:"6px 14px",borderRadius:"20px",zIndex:"200",whiteSpace:"nowrap",transition:"opacity .3s"});
-  document.querySelector("div[style='position:relative']").appendChild(t);
-  setTimeout(()=>{t.style.opacity="0";setTimeout(()=>t.remove(),300)},1800);
+function showToast(msg) {
+  const t = document.createElement("div");
+  t.className="toast"; t.textContent=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>{ t.style.opacity="0"; setTimeout(()=>t.remove(),300); }, 1800);
 }
 
-function renderMemberDisplay(){
-  const el=document.getElementById("member-display");
-  const badge=document.getElementById("member-badge");
+function renderMemberBar() {
+  const el = document.getElementById("member-bar");
+  const badge = document.getElementById("member-badge");
+  const hm = document.getElementById("header-member");
   if(currentMember){
-    el.innerHTML=`<div class="member-card" style="margin:0;border-radius:0;border-left:none;border-right:none;border-top:none">
+    el.innerHTML=`<div class="member-bar">
       <div class="member-avatar">${currentMember.initials}</div>
-      <div><div class="member-name">${currentMember.name}</div>
-      <div class="member-pts"><i class="ti ti-star" aria-hidden="true" style="font-size:11px;vertical-align:-1px;margin-right:2px"></i>${currentMember.pts}pt 保有</div></div>
-      <button class="member-logout" onclick="logoutMember()" aria-label="会員を外す"><i class="ti ti-x" aria-hidden="true" style="font-size:13px"></i></button>
+      <div>
+        <div class="member-bar-name">${currentMember.name}</div>
+        <div class="member-bar-pts"><i class="ti ti-star" style="font-size:11px;vertical-align:-1px;margin-right:2px"></i>${currentMember.pts}pt 保有</div>
+      </div>
+      <button class="member-logout" onclick="logoutMember()" aria-label="会員を外す"><i class="ti ti-x" style="font-size:14px"></i></button>
     </div>`;
-    badge.innerHTML=`<i class="ti ti-user" aria-hidden="true" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>${currentMember.name.split(" ")[0]}`;
+    badge.innerHTML=`<i class="ti ti-user" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>${currentMember.name.split(" ")[0]}`;
     badge.className="member-badge has-member";
+    hm.textContent=currentMember.name;
   } else {
     el.innerHTML="";
-    badge.innerHTML=`<i class="ti ti-user" aria-hidden="true" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>会員`;
+    badge.innerHTML=`<i class="ti ti-user" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>会員`;
     badge.className="member-badge";
+    hm.textContent="";
   }
   renderReceipt();
 }
+function logoutMember(){ currentMember=null; usingPts=0; renderMemberBar(); }
 
-function logoutMember(){currentMember=null;usingPts=0;renderMemberDisplay();}
+function showModal(html) {
+  const ov = document.createElement("div");
+  ov.className="modal-overlay"; ov.id="modal-ov"; ov.innerHTML=html;
+  document.body.appendChild(ov);
+}
+function closeModal() { const el=document.getElementById("modal-ov"); if(el) el.remove(); }
 
-function openMemberModal(){
-  showOverlay(`
-    <div class="modal">
-      <div class="modal-title"><i class="ti ti-users" aria-hidden="true" style="font-size:16px;vertical-align:-2px;margin-right:6px"></i>会員を選ぶ</div>
-      <div class="members-list">
-        ${MEMBERS.map(m=>`
-          <div class="mlist-item" onclick="selectMember(${m.id})">
-            <div class="member-avatar" style="width:32px;height:32px;font-size:12px">${m.initials}</div>
-            <div><div class="mlist-name">${m.name}</div><div class="mlist-pts">${m.pts}pt</div></div>
-            <span class="tag ${m.pts>=300?"tag-green":m.pts>=100?"tag-amber":"tag-red"}" style="margin-left:auto">${m.pts>=300?"ゴールド":m.pts>=100?"シルバー":"スタンダード"}</span>
-          </div>`).join("")}
-      </div>
-      <a class="new-member-link" onclick="openNewMemberModal()"><i class="ti ti-plus" aria-hidden="true" style="font-size:13px;vertical-align:-1px;margin-right:3px"></i>新規会員登録</a>
-      <div class="modal-btns" style="margin-top:12px">
-        <button class="mbtn-cancel" onclick="closeOverlay()">キャンセル</button>
-      </div>
+function openMemberModal() {
+  showModal(`<div class="modal">
+    <div class="modal-title"><i class="ti ti-users" style="font-size:16px;vertical-align:-2px;margin-right:6px"></i>会員を選ぶ</div>
+    <div class="members-list">
+      ${MEMBERS.map(m=>`
+        <div class="mlist-item" onclick="selectMember(${m.id})">
+          <div class="member-avatar" style="width:32px;height:32px;font-size:12px">${m.initials}</div>
+          <div><div class="mlist-name">${m.name}</div><div class="mlist-pts">${m.pts}pt</div></div>
+          <span class="tag ${m.pts>=300?"tag-green":m.pts>=100?"tag-amber":"tag-red"}" style="margin-left:auto">
+            ${m.pts>=300?"ゴールド":m.pts>=100?"シルバー":"スタンダード"}
+          </span>
+        </div>`).join("")}
     </div>
-  `);
-}
-
-function selectMember(id){
-  currentMember=MEMBERS.find(m=>m.id===id);
-  usingPts=0;
-  closeOverlay();
-  renderMemberDisplay();
-}
-
-function openNewMemberModal(){
-  showOverlay(`
-    <div class="modal">
-      <div class="modal-title"><i class="ti ti-user-plus" aria-hidden="true" style="font-size:16px;vertical-align:-2px;margin-right:6px"></i>新規会員登録</div>
-      <input id="new-name" placeholder="お名前（例: 佐藤 けんじ）" />
-      <div id="new-err"></div>
-      <div class="modal-btns">
-        <button class="mbtn-cancel" onclick="openMemberModal()">戻る</button>
-        <button class="mbtn-primary" onclick="registerMember()">登録する</button>
-      </div>
+    <a class="new-member-link" onclick="openNewMemberModal()">
+      <i class="ti ti-plus" style="font-size:13px;vertical-align:-1px;margin-right:3px"></i>新規会員登録
+    </a>
+    <div class="modal-btns" style="margin-top:14px">
+      <button class="mbtn-cancel" onclick="closeModal()">キャンセル</button>
     </div>
-  `);
+  </div>`);
 }
+function selectMember(id){ currentMember=MEMBERS.find(m=>m.id===id); usingPts=0; closeModal(); renderMemberBar(); }
 
-function registerMember(){
-  const name=document.getElementById("new-name").value.trim();
-  if(!name){document.getElementById("new-err").innerHTML=`<span class="err-msg">名前を入力してください</span>`;return;}
-  const initials=name.charAt(0);
-  const newM={id:Date.now(),name,pts:0,initials};
-  MEMBERS.push(newM);
-  currentMember=newM;
-  usingPts=0;
-  closeOverlay();
-  renderMemberDisplay();
-  showToast(`${name} さんを登録しました`);
-}
-
-function openPayModal(){
-  const total=calcTotal();
-  const earn=calcEarnPts();
-  showOverlay(`
-    <div class="modal complete-modal">
-      <span class="complete-emoji">🎉</span>
-      <div class="complete-ttl">ありがとうございました！</div>
-      <div class="complete-sub">${taxRate===8?"🛍 お持ち帰り（8%）":"🪑 イートイン（10%）"}</div>
-      <div class="complete-total">¥${total.toLocaleString()}</div>
-      ${currentMember?`<div class="pt-earned"><i class="ti ti-star" aria-hidden="true" style="font-size:12px;vertical-align:-1px;margin-right:3px"></i>+${earn}ポイント獲得！</div>`:""}
-      <button class="mbtn-primary" style="width:100%;margin-bottom:8px" onclick="completePayment()">
-        <i class="ti ti-arrow-back-up" aria-hidden="true" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>次のお客さん
-      </button>
+function openNewMemberModal() {
+  closeModal();
+  showModal(`<div class="modal">
+    <div class="modal-title"><i class="ti ti-user-plus" style="font-size:16px;vertical-align:-2px;margin-right:6px"></i>新規会員登録</div>
+    <input id="new-name" placeholder="お名前（例: 佐藤 けんじ）" autofocus />
+    <div id="new-err"></div>
+    <div class="modal-btns">
+      <button class="mbtn-cancel" onclick="closeModal();openMemberModal()">戻る</button>
+      <button class="mbtn-ok" onclick="registerMember()">登録する</button>
     </div>
-  `);
+  </div>`);
+}
+function registerMember() {
+  const name = document.getElementById("new-name").value.trim();
+  if(!name){ document.getElementById("new-err").innerHTML=`<div class="coupon-err">名前を入力してください</div>`; return; }
+  const newM = {id:Date.now(), name, pts:0, initials:name.charAt(0)};
+  MEMBERS.push(newM); currentMember=newM; usingPts=0;
+  closeModal(); renderMemberBar(); showToast(`${name} さんを登録しました`);
 }
 
-function completePayment(){
-  if(currentMember){
-    const earn=calcEarnPts();
-    currentMember.pts=Math.max(0,currentMember.pts-usingPts)+earn;
-  }
-  cart=[];coupon=null;usingPts=0;
+function openPayModal() {
+  const total=calcTotal(), earn=calcEarn();
+  showModal(`<div class="modal complete-modal">
+    <span class="complete-emoji">🎉</span>
+    <div class="complete-ttl">ありがとうございました！</div>
+    <div class="complete-sub">${taxRate===8?"🛍 お持ち帰り（8%）":"🪑 イートイン（10%）"}</div>
+    <div class="complete-total">¥${total.toLocaleString()}</div>
+    ${currentMember?`<div class="pt-earned"><i class="ti ti-star" style="font-size:13px;vertical-align:-1px;margin-right:3px"></i>+${earn}ポイント獲得！</div>`:""}
+    <button class="mbtn-ok" style="width:100%;margin-bottom:0" onclick="completePayment()">
+      <i class="ti ti-arrow-back-up" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>次のお客さん
+    </button>
+  </div>`);
+}
+function completePayment() {
+  if(currentMember){ const earn=calcEarn(); currentMember.pts=Math.max(0,currentMember.pts-usingPts)+earn; }
+  cart=[]; coupon=null; usingPts=0;
   document.getElementById("coupon-input").value="";
   document.getElementById("coupon-msg").innerHTML="";
-  closeOverlay();
-  renderMemberDisplay();
-  renderReceipt();
+  closeModal(); renderMemberBar(); renderReceipt();
 }
 
-function showOverlay(html){
-  const oa=document.getElementById("overlay-area");
-  const wrap=document.createElement("div");
-  wrap.style.cssText="position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:50;min-height:680px";
-  wrap.id="modal-overlay";
-  wrap.innerHTML=html;
-  oa.appendChild(wrap);
-}
-function closeOverlay(){
-  const el=document.getElementById("modal-overlay");
-  if(el)el.remove();
-}
-
-renderCats();renderProducts();renderMemberDisplay();
+renderCats(); renderProducts(); renderMemberBar();
 </script>
+</body>
+</html>
